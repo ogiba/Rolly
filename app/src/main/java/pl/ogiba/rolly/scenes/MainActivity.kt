@@ -7,10 +7,6 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.View
-import android.view.animation.Animation
-import android.view.animation.AnimationSet
-import android.view.animation.AnimationUtils
-import android.view.animation.ScaleAnimation
 import android.widget.FrameLayout
 import pl.ogiba.rolly.R
 
@@ -86,8 +82,7 @@ class MainActivity : AppCompatActivity(), BaseFragment.OnViewActionListener, Vie
         })
 
         cardFlipOut.setTarget(frontView!!)
-        animator.playSequentially(cardFlipIn)
-        animator.playSequentially(cardFlipOut)
+        animator.playTogether(cardFlipIn, cardFlipOut)
         animator.start()
     }
 
@@ -127,8 +122,7 @@ class MainActivity : AppCompatActivity(), BaseFragment.OnViewActionListener, Vie
         })
 
         cardFlipOut.setTarget(backView!!)
-        animator.playSequentially(cardFlipIn)
-        animator.playSequentially(cardFlipOut)
+        animator.playTogether(cardFlipIn, cardFlipOut)
         animator.start()
     }
 
