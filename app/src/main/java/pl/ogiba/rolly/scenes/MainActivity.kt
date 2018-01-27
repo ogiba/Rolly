@@ -1,10 +1,16 @@
 package pl.ogiba.rolly.scenes
 
-import android.opengl.Visibility
-import android.support.v7.app.AppCompatActivity
+import android.animation.Animator
+import android.animation.AnimatorInflater
+import android.animation.AnimatorSet
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.View
+import android.view.animation.Animation
+import android.view.animation.AnimationSet
+import android.view.animation.AnimationUtils
+import android.view.animation.ScaleAnimation
 import android.widget.FrameLayout
 import pl.ogiba.rolly.R
 
@@ -38,6 +44,7 @@ class MainActivity : AppCompatActivity(), BaseFragment.OnViewActionListener, Vie
             BaseFragment.OnViewActionListener.ViewType.BACK -> backItemAction()
         }
     }
+
     private fun setupFirstFragment() {
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         val fragment = FrontFragment()
@@ -52,9 +59,36 @@ class MainActivity : AppCompatActivity(), BaseFragment.OnViewActionListener, Vie
 //        val fragment = BackFragment()
 //        fragment.actionListener = this
 //        replaceFragment(fragment)
+//
+        val animator = AnimatorSet()
 
-        backView?.visibility = View.VISIBLE
-        backView?.alpha = 1.0f
+        val cardFlipIn = AnimatorInflater.loadAnimator(this, R.animator.card_flip_left_in) as AnimatorSet
+        val cardFlipOut = AnimatorInflater.loadAnimator(this, R.animator.card_flip_left_out) as AnimatorSet
+
+        cardFlipIn.setTarget(backView!!)
+
+        animator.addListener(object : Animator.AnimatorListener {
+            override fun onAnimationRepeat(p0: Animator?) {
+
+            }
+
+            override fun onAnimationEnd(p0: Animator?) {
+
+            }
+
+            override fun onAnimationCancel(p0: Animator?) {
+
+            }
+
+            override fun onAnimationStart(p0: Animator?) {
+                backView?.visibility = View.VISIBLE
+            }
+        })
+
+        cardFlipOut.setTarget(frontView!!)
+        animator.playSequentially(cardFlipIn)
+        animator.playSequentially(cardFlipOut)
+        animator.start()
     }
 
     private fun replaceFragment(fragment: BaseFragment) {
@@ -67,15 +101,42 @@ class MainActivity : AppCompatActivity(), BaseFragment.OnViewActionListener, Vie
     private fun backItemAction() {
         Log.d(TAG, "Back clicked")
 
-        backView?.alpha = .0f
-        backView?.visibility = View.GONE
+        val animator = AnimatorSet()
+
+        val cardFlipIn = AnimatorInflater.loadAnimator(this, R.animator.card_flip_left_in) as AnimatorSet
+        val cardFlipOut = AnimatorInflater.loadAnimator(this, R.animator.card_flip_left_out) as AnimatorSet
+
+        cardFlipIn.setTarget(frontView!!)
+
+        animator.addListener(object : Animator.AnimatorListener {
+            override fun onAnimationRepeat(p0: Animator?) {
+
+            }
+
+            override fun onAnimationEnd(p0: Animator?) {
+                backView?.visibility = View.GONE
+            }
+
+            override fun onAnimationCancel(p0: Animator?) {
+
+            }
+
+            override fun onAnimationStart(p0: Animator?) {
+
+            }
+        })
+
+        cardFlipOut.setTarget(backView!!)
+        animator.playSequentially(cardFlipIn)
+        animator.playSequentially(cardFlipOut)
+        animator.start()
     }
 
     override fun onClick(view: View?) {
         if (view == null)
             return
 
-        when(view.id) {
+        when (view.id) {
             R.id.front_view -> frontItemAction()
             R.id.back_view -> backItemAction()
         }
