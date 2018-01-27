@@ -22,6 +22,13 @@ class MainActivity : AppCompatActivity(), BaseFragment.OnViewActionListener {
         setupFirstFragment()
     }
 
+    override fun onViewClicked(viewType: BaseFragment.OnViewActionListener.ViewType) {
+
+        when (viewType) {
+            BaseFragment.OnViewActionListener.ViewType.FRONT -> frontItemAction()
+            BaseFragment.OnViewActionListener.ViewType.BACK -> backItemAction()
+        }
+    }
     private fun setupFirstFragment() {
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         val fragment = FrontFragment()
@@ -30,11 +37,23 @@ class MainActivity : AppCompatActivity(), BaseFragment.OnViewActionListener {
         fragmentTransaction.commit()
     }
 
-    override fun onViewClicked(viewType: BaseFragment.OnViewActionListener.ViewType) {
+    private fun frontItemAction() {
+        Log.d(TAG, "Front clicked")
 
-        when(viewType) {
-            BaseFragment.OnViewActionListener.ViewType.FRONT -> Log.d(TAG, "Front clicked")
-            BaseFragment.OnViewActionListener.ViewType.BACK -> Log.d(TAG, "Back clicked")
-        }
+        val fragment = BackFragment()
+        fragment.actionListener = this
+        replaceFragment(fragment)
+    }
+
+    private fun replaceFragment(fragment: BaseFragment) {
+        val fragmentTransaction = supportFragmentManager.beginTransaction()
+        fragmentTransaction.replace(R.id.fragment_container, fragment)
+                .addToBackStack("TEST")
+        fragmentTransaction.commit()
+    }
+
+    private fun backItemAction() {
+        Log.d(TAG, "Back clicked")
+        supportFragmentManager.popBackStack()
     }
 }
