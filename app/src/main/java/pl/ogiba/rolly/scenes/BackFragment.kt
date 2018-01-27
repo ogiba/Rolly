@@ -1,4 +1,6 @@
-package pl.ogiba.rolly
+package pl.ogiba.rolly.scenes
+
+import pl.ogiba.rolly.R
 
 /**
  * Created by robertogiba on 27.01.2018.

@@ -1,4 +1,4 @@
-package pl.ogiba.rolly
+package pl.ogiba.rolly.scenes
 
 import android.os.Bundle
 import android.support.annotation.ColorRes
@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import pl.ogiba.rolly.R
 
 /**
  * Created by robertogiba on 27.01.2018.
@@ -28,7 +29,7 @@ open abstract class BaseFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         view?.setOnClickListener {
-            Log.d(BaseFragment.TAG, "View clicked")
+            Log.d(TAG, "View clicked")
             actionListener?.onViewClicked()
         }
     }

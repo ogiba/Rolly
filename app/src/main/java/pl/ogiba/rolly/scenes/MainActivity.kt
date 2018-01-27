@@ -1,8 +1,9 @@
-package pl.ogiba.rolly
+package pl.ogiba.rolly.scenes
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.FrameLayout
+import pl.ogiba.rolly.R
 
 class MainActivity : AppCompatActivity() {
 
