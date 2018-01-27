@@ -30,7 +30,7 @@ open abstract class BaseFragment : Fragment() {
 
         view?.setOnClickListener {
             Log.d(TAG, "View clicked")
-            actionListener?.onViewClicked()
+            actionListener?.onViewClicked(onViewTypeRequired())
         }
     }
 
@@ -50,7 +50,13 @@ open abstract class BaseFragment : Fragment() {
     @ColorRes
     protected abstract fun provideBackgroundColor(): Int?
 
+    protected abstract fun onViewTypeRequired(): OnViewActionListener.ViewType
+
     public interface OnViewActionListener {
-        fun onViewClicked()
+        fun onViewClicked(viewType: ViewType)
+
+        enum class ViewType {
+            BACK, FRONT
+        }
     }
 }

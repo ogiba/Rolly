@@ -10,4 +10,8 @@ class FrontFragment : BaseFragment() {
     override fun provideBackgroundColor(): Int {
         return R.color.frontColor
     }
+
+    override fun onViewTypeRequired(): OnViewActionListener.ViewType {
+        return OnViewActionListener.ViewType.FRONT
+    }
 }

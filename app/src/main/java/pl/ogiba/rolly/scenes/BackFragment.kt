@@ -9,4 +9,8 @@ class BackFragment: BaseFragment() {
     override fun provideBackgroundColor(): Int? {
         return R.color.backColor
     }
+
+    override fun onViewTypeRequired(): OnViewActionListener.ViewType {
+        return OnViewActionListener.ViewType.BACK
+    }
 }
