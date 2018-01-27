@@ -11,4 +11,20 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
+    <LinearLayout
+        android:id="@+id/front_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/frontColor"
+        android:orientation="vertical" />
+
+    <LinearLayout
+        android:id="@+id/back_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="0"
+        android:background="@color/backColor"
+        android:orientation="vertical"
+        android:visibility="gone" />
+
 </android.support.constraint.ConstraintLayout>
