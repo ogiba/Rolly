@@ -3,6 +3,7 @@ package pl.ogiba.rolly
 import android.os.Bundle
 import android.support.annotation.ColorRes
 import android.support.v4.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +12,12 @@ import android.view.ViewGroup
  * Created by robertogiba on 27.01.2018.
  */
 open abstract class BaseFragment : Fragment() {
+    companion object {
+        const val TAG = "BaseFragment"
+    }
+
+    open var actionListener: OnViewActionListener? = null
+
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater?.inflate(R.layout.fragment_front, container, false)
         setupBackgroundColor(view)
@@ -19,6 +26,11 @@ open abstract class BaseFragment : Fragment() {
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        view?.setOnClickListener {
+            Log.d(BaseFragment.TAG, "View clicked")
+            actionListener?.onViewClicked()
+        }
     }
 
     private fun setupBackgroundColor(view: View?) {
@@ -36,4 +48,8 @@ open abstract class BaseFragment : Fragment() {
 
     @ColorRes
     protected abstract fun provideBackgroundColor(): Int?
+
+    public interface OnViewActionListener {
+        fun onViewClicked()
+    }
 }
