@@ -13,6 +13,7 @@ import pl.ogiba.rolly.R
 class MainActivity : AppCompatActivity(), BaseFragment.OnViewActionListener, View.OnClickListener {
     companion object {
         const val TAG = "MainActivity"
+        const val DEFAULT_DISTANCE = 8000
     }
 
     private var fragmentContainer: FrameLayout? = null
@@ -23,13 +24,8 @@ class MainActivity : AppCompatActivity(), BaseFragment.OnViewActionListener, Vie
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        fragmentContainer = findViewById<FrameLayout>(R.id.fragment_container) as FrameLayout
-        frontView = findViewById(R.id.front_view)
-        backView = findViewById(R.id.back_view)
-
-
-        frontView?.setOnClickListener(this)
-        backView?.setOnClickListener(this)
+        bindViews()
+        setupViews()
 //        setupFirstFragment()
     }
 
@@ -41,12 +37,28 @@ class MainActivity : AppCompatActivity(), BaseFragment.OnViewActionListener, Vie
         }
     }
 
+    private fun bindViews() {
+        fragmentContainer = findViewById<FrameLayout>(R.id.fragment_container) as FrameLayout
+        frontView = findViewById(R.id.front_view)
+        backView = findViewById(R.id.back_view)
+    }
+
     private fun setupFirstFragment() {
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         val fragment = FrontFragment()
         fragment.actionListener = this
         fragmentTransaction.replace(R.id.fragment_container, fragment)
         fragmentTransaction.commit()
+    }
+
+    private fun setupViews() {
+        frontView?.setOnClickListener(this)
+        backView?.setOnClickListener(this)
+
+        val density = resources.displayMetrics.density
+
+        frontView?.cameraDistance = density * DEFAULT_DISTANCE
+        backView?.cameraDistance = density * DEFAULT_DISTANCE
     }
 
     private fun frontItemAction() {
