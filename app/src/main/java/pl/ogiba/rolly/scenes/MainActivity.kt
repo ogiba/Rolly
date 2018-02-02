@@ -20,6 +20,8 @@ class MainActivity : AppCompatActivity(), BaseFragment.OnViewActionListener, Vie
     private var fragmentContainer: FrameLayout? = null
     private var frontView: View? = null
     private var backView: View? = null
+    private var flipRightBtn: View? = null
+    private var flipLeftBtn: View? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,6 +44,16 @@ class MainActivity : AppCompatActivity(), BaseFragment.OnViewActionListener, Vie
         fragmentContainer = findViewById<FrameLayout>(R.id.fragment_container) as FrameLayout
         frontView = findViewById(R.id.front_view)
         backView = findViewById(R.id.back_view)
+        flipLeftBtn = findViewById(R.id.btn_flip_left)
+        flipRightBtn = findViewById(R.id.btn_flip_right)
+
+        flipLeftBtn?.setOnClickListener {
+            frontItemAction()
+        }
+
+        flipRightBtn?.setOnClickListener {
+            backItemAction()
+        }
     }
 
     private fun setupFirstFragment() {
@@ -98,7 +110,7 @@ class MainActivity : AppCompatActivity(), BaseFragment.OnViewActionListener, Vie
     private fun replaceFragment(fragment: BaseFragment) {
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         fragmentTransaction?.setCustomAnimations(R.animator.card_flip_left_in, R.animator.card_flip_left_out)
-        fragmentTransaction.replace(R.id.fragment_container, fragment,"TEST")
+        fragmentTransaction.replace(R.id.fragment_container, fragment, "TEST")
 //                .addToBackStack("TEST")
         fragmentTransaction.commit()
     }
