@@ -4,6 +4,7 @@ import android.animation.Animator
 import android.animation.AnimatorInflater
 import android.animation.AnimatorListenerAdapter
 import android.animation.AnimatorSet
+import android.graphics.Color
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
@@ -28,8 +29,8 @@ class MainActivity : AppCompatActivity(), BaseFragment.OnViewActionListener, Vie
         setContentView(R.layout.activity_main)
 
         bindViews()
-//        setupViews()
-        setupFirstFragment()
+        setupViews()
+//        setupFirstFragment()
     }
 
     override fun onViewClicked(viewType: BaseFragment.OnViewActionListener.ViewType) {
@@ -77,34 +78,34 @@ class MainActivity : AppCompatActivity(), BaseFragment.OnViewActionListener, Vie
     private fun frontItemAction() {
         Log.d(TAG, "Front clicked")
 //
-        val fragment = BackFragment()
-        fragment.actionListener = this
-        replaceFragment(fragment)
-//
-//        val animator = AnimatorSet()
-//
-//        val cardFlipIn = AnimatorInflater.loadAnimator(this, R.animator.card_flip_left_in) as AnimatorSet
-//        val cardFlipOut = AnimatorInflater.loadAnimator(this, R.animator.card_flip_left_out) as AnimatorSet
-//
-//        cardFlipIn.setTarget(backView!!)
-//
-//        animator.addListener(object : AnimatorListenerAdapter() {
-//            override fun onAnimationStart(animation: Animator?) {
-//                super.onAnimationStart(animation)
-//
-//                backView?.visibility = View.VISIBLE
-//            }
-//
-//            override fun onAnimationEnd(animation: Animator?) {
-//                super.onAnimationEnd(animation)
-//
-//                frontView?.visibility = View.INVISIBLE
-//            }
-//        })
-//
-//        cardFlipOut.setTarget(frontView!!)
-//        animator.playTogether(cardFlipIn, cardFlipOut)
-//        animator.start()
+//        val fragment = BackFragment()
+//        fragment.actionListener = this
+//        replaceFragment(fragment)
+
+        val animator = AnimatorSet()
+
+        val cardFlipIn = AnimatorInflater.loadAnimator(this, R.animator.card_flip_left_in) as AnimatorSet
+        val cardFlipOut = AnimatorInflater.loadAnimator(this, R.animator.card_flip_left_out) as AnimatorSet
+
+        cardFlipIn.setTarget(frontView!!)
+
+        animator.addListener(object : AnimatorListenerAdapter() {
+            override fun onAnimationStart(animation: Animator?) {
+                super.onAnimationStart(animation)
+
+            }
+
+            override fun onAnimationEnd(animation: Animator?) {
+                super.onAnimationEnd(animation)
+
+                val color = resources.getColor(R.color.backColor)
+                frontView?.setBackgroundColor(color)
+            }
+        })
+
+        cardFlipOut.setTarget(frontView!!)
+        animator.playTogether(cardFlipIn, cardFlipOut)
+        animator.start()
     }
 
     private fun replaceFragment(fragment: BaseFragment) {
@@ -116,36 +117,37 @@ class MainActivity : AppCompatActivity(), BaseFragment.OnViewActionListener, Vie
     }
 
     private fun backItemAction() {
-//        Log.d(TAG, "Back clicked")
-//
-//        val animator = AnimatorSet()
-//
-//        val cardFlipIn = AnimatorInflater.loadAnimator(this, R.animator.card_flip_left_in) as AnimatorSet
-//        val cardFlipOut = AnimatorInflater.loadAnimator(this, R.animator.card_flip_left_out) as AnimatorSet
-//
-//        cardFlipIn.setTarget(frontView!!)
-//
-//        animator.addListener(object : AnimatorListenerAdapter() {
-//            override fun onAnimationStart(animation: Animator?) {
-//                super.onAnimationStart(animation)
-//
-//                frontView?.visibility = View.VISIBLE
-//            }
-//
-//            override fun onAnimationEnd(animation: Animator?) {
-//                super.onAnimationEnd(animation)
-//
-//                backView?.visibility = View.INVISIBLE
-//            }
-//        })
-//
-//        cardFlipOut.setTarget(backView!!)
-//        animator.playTogether(cardFlipIn, cardFlipOut)
-//        animator.start()
+        Log.d(TAG, "Back clicked")
 
-        val fragment = FrontFragment()
-        fragment.actionListener = this
-        replaceFragment(fragment)
+        val animator = AnimatorSet()
+
+        val cardFlipIn = AnimatorInflater.loadAnimator(this, R.animator.card_flip_left_in) as AnimatorSet
+        val cardFlipOut = AnimatorInflater.loadAnimator(this, R.animator.card_flip_left_out) as AnimatorSet
+
+        cardFlipIn.setTarget(frontView!!)
+
+        animator.addListener(object : AnimatorListenerAdapter() {
+            override fun onAnimationStart(animation: Animator?) {
+                super.onAnimationStart(animation)
+
+
+            }
+
+            override fun onAnimationEnd(animation: Animator?) {
+                super.onAnimationEnd(animation)
+
+                val color = resources.getColor(R.color.frontColor)
+                frontView?.setBackgroundColor(color)
+            }
+        })
+
+        cardFlipOut.setTarget(frontView!!)
+        animator.playTogether(cardFlipIn, cardFlipOut)
+        animator.start()
+
+//        val fragment = FrontFragment()
+//        fragment.actionListener = this
+//        replaceFragment(fragment)
     }
 
     override fun onClick(view: View?) {
