@@ -15,6 +15,7 @@ import pl.ogiba.rolly.R
 open abstract class BaseFragment : Fragment() {
     companion object {
         const val TAG = "BaseFragment"
+        const val DEFAULT_DISTANCE = 8000
     }
 
     open var actionListener: OnViewActionListener? = null
@@ -27,6 +28,10 @@ open abstract class BaseFragment : Fragment() {
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val density = resources.displayMetrics.density
+
+        view?.cameraDistance = density * DEFAULT_DISTANCE
 
         view?.setOnClickListener {
             Log.d(TAG, "View clicked")
